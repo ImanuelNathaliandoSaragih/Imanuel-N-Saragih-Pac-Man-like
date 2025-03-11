@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +12,15 @@ public class Player : MonoBehaviour
 
     private Transform _camera;
     private Rigidbody _rigidBody;
+
+    [SerializeField]
+    private float _powerUpDuration;
+
+    private Coroutine _powerUpCoroutine;
+
+    public Action OnPowerUpStart;
+
+    public Action OnPowerUpStop;
     private void Start()
 
     {
@@ -43,8 +53,42 @@ public class Player : MonoBehaviour
         horizontalDirection.y = 0;
         Vector3 movementDirection = horizontalDirection + verticalDirection;
         _rigidBody.velocity = movementDirection * _speed * Time.deltaTime;
-        Debug.Log("Horizontal: " + horizontal);
+    }
+    public void PickPowerUp()
 
-        Debug.Log("Vertical: " + vertical);
+    {
+
+        Debug.Log("Pick Power Up");
+        if (_powerUpCoroutine != null)
+
+        {
+
+            StopCoroutine(_powerUpCoroutine);
+
+        }
+
+        _powerUpCoroutine = StartCoroutine(StartPowerUp());
+    }
+    private IEnumerator StartPowerUp()
+
+    {
+        if (OnPowerUpStart != null)
+
+        {
+
+            OnPowerUpStart();
+
+        }
+
+        yield return new WaitForSeconds(_powerUpDuration);
+
+        if (OnPowerUpStop != null)
+
+        {
+
+            OnPowerUpStop();
+
+        }
+
     }
 }
