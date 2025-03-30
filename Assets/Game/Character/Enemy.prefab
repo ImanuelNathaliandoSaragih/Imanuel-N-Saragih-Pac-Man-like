@@ -1194,6 +1194,7 @@ MonoBehaviour:
   ChaseDistance: 3
   Player: {fileID: 0}
   Animator: {fileID: 0}
+  FoundPlayerSFX: {fileID: 8644202709828383143, guid: 947f2d580103f7b409e1d209444b88ab, type: 3}
 --- !u!1 &4153023136553925888
 GameObject:
   m_ObjectHideFlags: 0

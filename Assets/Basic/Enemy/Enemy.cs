@@ -27,6 +27,9 @@ public class Enemy : MonoBehaviour
 
     [HideInInspector]
     public Animator Animator;
+
+    [SerializeField]
+    public AudioSource FoundPlayerSFX;
     private void Awake()
 
     {

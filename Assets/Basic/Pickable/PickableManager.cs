@@ -10,6 +10,8 @@ public class PickableManager : MonoBehaviour
     [SerializeField]
     private ScoreManager _scoreManager;
     private List<Pickable> _pickableList = new List<Pickable>();
+    [SerializeField]
+    private AudioSource _pickUpCoinSFX;
     private void Start()
 
     {
@@ -52,6 +54,10 @@ public class PickableManager : MonoBehaviour
 
             _player?.PickPowerUp();
 
+        }
+        else
+        {
+            _pickUpCoinSFX.Play();
         }
         _pickableList.Remove(pickable);
         Destroy(pickable.gameObject);

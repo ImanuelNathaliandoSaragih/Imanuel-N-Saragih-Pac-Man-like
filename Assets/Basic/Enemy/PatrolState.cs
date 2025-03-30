@@ -42,7 +42,7 @@ public class PatrolState : BaseState
 
         {
 
-            if (Vector3.Distance(_destination, enemy.transform.position) <= 0.1)
+            if (Vector3.Distance(_destination, enemy.transform.position) <= 1)
 
             {
                 Debug.Log("Change Patrolling");

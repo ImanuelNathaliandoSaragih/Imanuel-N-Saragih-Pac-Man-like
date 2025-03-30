@@ -16,7 +16,7 @@ public class ScoreManager : MonoBehaviour
 
     {
 
-        _scoreText.text = "Score: " + _score + " / " + _maxScore;
+        _scoreText.text = _score + " / " + _maxScore;
 
     }
     public void SetMaxScore(int value)

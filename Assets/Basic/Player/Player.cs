@@ -45,7 +45,12 @@ public class Player : MonoBehaviour
 
     public GameObject plain;
     public GameObject armor;
-
+    [SerializeField]
+    private AudioSource _powerUpActiveSFX;
+    [SerializeField]
+    private AudioSource _powerUpDeactiveSFX;
+    [SerializeField]
+    private AudioSource _deathSFX;
     private void Start()
 
     {
@@ -80,10 +85,20 @@ public class Player : MonoBehaviour
             movementDirection = Quaternion.Euler(0f, rotationAngle, 0f) * Vector3.forward;
         }
 
-        _rigidBody.velocity = movementDirection * _speed * Time.deltaTime;
+        Vector3 velocity = movementDirection * _speed * Time.deltaTime;
+        velocity.y = _rigidBody.velocity.y; // Keep gravity effect
+
+        _rigidBody.velocity = velocity;
+        Debug.Log("Y Velocity: " + _rigidBody.velocity.y);
+
 
         _animator.SetFloat("Velocity", _rigidBody.velocity.magnitude);
     }
+    void FixedUpdate()
+    {
+        _rigidBody.AddForce(Vector3.down * 100f, ForceMode.Acceleration);
+    }
+
     public void PickPowerUp()
 
     {
@@ -105,6 +120,8 @@ public class Player : MonoBehaviour
         _isPowerUpActive = true;
         plain.SetActive(false);
         armor.SetActive(true);
+
+        _powerUpActiveSFX.Play();
         if (OnPowerUpStart != null)
 
         {
@@ -118,6 +135,7 @@ public class Player : MonoBehaviour
 
         plain.SetActive(true);
         armor.SetActive(false);
+        _powerUpDeactiveSFX.Play();
         if (OnPowerUpStop != null)
 
         {
@@ -151,7 +169,7 @@ public class Player : MonoBehaviour
     {
 
         _health -= 1;
-
+        _deathSFX.Play();
         if (_health > 0)
 
         {
@@ -178,7 +196,7 @@ public class Player : MonoBehaviour
 
     {
 
-        _healthText.text = "Health: " + _health;
+        _healthText.text = "" + _health;
 
     }
 }
